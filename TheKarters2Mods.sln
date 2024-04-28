@@ -4,6 +4,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DisableLeaderboards", "Disa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AerialFastFallMod", "AerialFastFallMod\AerialFastFallMod.csproj", "{0394D6E6-FD7A-4875-AF19-740760ABA34C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoReloadConfigModSDK", "AutoReloadConfigModSDK\AutoReloadConfigModSDK.csproj", "{780BF67A-A09E-4C26-A9F7-6CFB64F7F497}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{0394D6E6-FD7A-4875-AF19-740760ABA34C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0394D6E6-FD7A-4875-AF19-740760ABA34C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0394D6E6-FD7A-4875-AF19-740760ABA34C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{780BF67A-A09E-4C26-A9F7-6CFB64F7F497}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{780BF67A-A09E-4C26-A9F7-6CFB64F7F497}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{780BF67A-A09E-4C26-A9F7-6CFB64F7F497}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{780BF67A-A09E-4C26-A9F7-6CFB64F7F497}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
