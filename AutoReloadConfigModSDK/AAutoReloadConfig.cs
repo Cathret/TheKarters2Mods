@@ -1,15 +1,69 @@
-﻿using BepInEx.Unity.IL2CPP;
+﻿using System;
+using BepInEx.Unity.IL2CPP;
 
 namespace TheKarters2Mods;
 
 public abstract class AAutoReloadConfig
 {
-    protected void RegisterToAutoReload()
+    private bool m_isRegistered = false;
+    
+    protected bool RegisterToAutoReload()
     {
-        AutoReloadConfigModSDKPlugin.Instance.AddToAutoReload(this);
+        BasePlugin plugin = GetPlugin();
+        if (plugin == null)
+            return false;
+
+        if (m_isRegistered)
+        {
+            plugin.Log.LogError($"{GetType().Name} instance already registered to AutoReload, will not register twice");
+            return false;
+        }
+
+        plugin.Config.ConfigReloaded += Internal_LoadConfig;
+
+        AutoReloadConfigModSDKPlugin autoReloadPlugin = AutoReloadConfigModSDKPlugin.Instance;
+        if (autoReloadPlugin == null)
+        {
+            plugin.Log.LogError($"Can't find Instance of AutoReloadModSDK Plugin. {GetType().Name} couldn't be registered to AutoReload");
+            return false;
+        }
+        
+        autoReloadPlugin.AddToAutoReload(this);
+
+        m_isRegistered = true;
+
+        return true;
+    }
+
+    protected bool TryUnregisterFromAutoReload()
+    {
+        if (!m_isRegistered)
+            return false;
+        
+        BasePlugin plugin = GetPlugin();
+        if (plugin != null)
+        {
+            plugin.Config.ConfigReloaded -= Internal_LoadConfig;
+
+            AutoReloadConfigModSDKPlugin.Instance?.RemoveFromAutoReload(this);
+        }
+
+        m_isRegistered = false;
+
+        return true;
+    }
+
+    ~AAutoReloadConfig()
+    {
+        TryUnregisterFromAutoReload();
     }
     
     public abstract BasePlugin GetPlugin();
 
-    public abstract void LoadConfig();
+    protected abstract void LoadConfig();
+
+    private void Internal_LoadConfig(object _sender, EventArgs _e)
+    {
+        LoadConfig();
+    }
 }
