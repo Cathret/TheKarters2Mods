@@ -8,8 +8,10 @@ using UnityEngine;
 namespace BetInExTesting.Patches;
 
 [HarmonyPatch(typeof(PixelKartPhysics), "FixedUpdate")]
-public class AerialFastFall
+public class AerialFastFall : AAutoReloadConfig
 {
+    private static AerialFastFall Instance { get; set; }
+    
     private static AerialFastFallPlugin ms_plugin = null;
     
     private static ConfigEntry<float> ConfigFastFallRate { get; set; }
@@ -19,8 +21,6 @@ public class AerialFastFall
     private static float ms_fastFallRate = 200f;
     private static float ms_minimumJoystickInputBeforeFastFall = 0.1f;
     private static float ms_minimumJumpTimeBeforeFastFall = 0.5f;
-
-    private static bool ms_justReloaded = false;
 
     private static void LogDebug(string _text) => AerialFastFallPlugin.Log.LogDebug($"[AerialFastFall]: {_text}");
     private static void LogInfo(string _text) => AerialFastFallPlugin.Log.LogInfo($"[AerialFastFall]: {_text}");
@@ -37,16 +37,11 @@ public class AerialFastFall
         
         ms_plugin = _plugin;
         
-        ms_plugin.Config.ConfigReloaded += (_sender, _args) => BindConfigs();
-        
-        BindConfigs();
+        Instance = new AerialFastFall();
+        Instance.RegisterToAutoReload();
+        Instance.LoadConfig();
         
         _harmony.PatchAll(typeof(AerialFastFall));
-    }
-
-    private static void ReloadConfigs()
-    {
-        ms_plugin.Config.Reload();
     }
 
     private static void BindConfigs()
@@ -86,9 +81,6 @@ public class AerialFastFall
     
     public static void Postfix(PixelKartPhysics __instance)
     {
-        if (Input.GetKeyDown(KeyCode.Home))
-            ReloadConfigs();
-        
         if (!IsAllowedToFastFall(__instance))
             return;
         
@@ -105,5 +97,15 @@ public class AerialFastFall
     public static void Cleanup(MethodBase original)
     {
         LogMessage(original == null ? "finished self loading" : "finished patch loading");
+    }
+
+    public override BasePlugin GetPlugin()
+    {
+        return ms_plugin;
+    }
+
+    protected override void LoadConfig()
+    {
+        BindConfigs();
     }
 }

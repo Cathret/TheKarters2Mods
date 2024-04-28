@@ -6,7 +6,8 @@ using HarmonyLib;
 namespace TheKarters2Mods;
 
 [BepInPlugin(AerialFastFall_BepInExInfo.PLUGIN_GUID, AerialFastFall_BepInExInfo.PLUGIN_NAME, AerialFastFall_BepInExInfo.PLUGIN_VERSION)]
-[BepInDependency(DisableLeaderboardsDependency.PLUGIN_GUID)]
+[BepInDependency(PluginDependencies.DISABLE_LEADERBOARDS_GUID)]
+[BepInDependency(PluginDependencies.AUTO_RELOAD_CONFIG_GUID)]
 public class AerialFastFallPlugin : BasePlugin
 {
     internal new static ManualLogSource Log;
@@ -19,13 +20,6 @@ public class AerialFastFallPlugin : BasePlugin
         
         // Plugin startup logic
         Log.LogMessage($"Plugin {AerialFastFall_BepInExInfo.PLUGIN_GUID} ({AerialFastFall_BepInExInfo.PLUGIN_NAME}) is loaded!");
-        
-        Log.LogDebug("Debug Log working");
-        Log.LogInfo("Info Log working");
-        Log.LogMessage("Message Log working");
-        Log.LogWarning("Warning Log working");
-        Log.LogError("Error Log working");
-        Log.LogFatal("Fatal Log working");
 
         BetInExTesting.Patches.AerialFastFall.Patch(this, m_harmony);
     }

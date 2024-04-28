@@ -430,4 +430,8 @@
       <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\Whinarn.UnityMeshSimplifier.Runtime.dll</HintPath>
     </Reference>
   </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AutoReloadConfigModSDK\AutoReloadConfigModSDK.csproj" />
+  </ItemGroup>
 </Project>

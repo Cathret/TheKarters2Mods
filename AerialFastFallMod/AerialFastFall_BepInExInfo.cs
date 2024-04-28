@@ -7,7 +7,8 @@ public static class AerialFastFall_BepInExInfo
     public const string PLUGIN_VERSION = "0.9.0";
 }
 
-public static class DisableLeaderboardsDependency
+public static class PluginDependencies
 {        
-    public const string PLUGIN_GUID = "DisableLeaderboards";
+    public const string DISABLE_LEADERBOARDS_GUID = "DisableLeaderboards";
+    public const string AUTO_RELOAD_CONFIG_GUID = "AutoReloadConfigModSDK";
 }
