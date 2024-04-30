@@ -1,9 +1,8 @@
-﻿using System;
-using BepInEx;
+﻿using BepInEx;
 using BepInEx.Configuration;
 using BepInEx.Logging;
 using BepInEx.Unity.IL2CPP;
-using HarmonyLib;
+using TheKarters2Mods.Patches;
 
 namespace TheKarters2Mods;
 
@@ -12,31 +11,29 @@ namespace TheKarters2Mods;
 [BepInDependency(PluginDependencies.AUTO_RELOAD_CONFIG_GUID)]
 public class AerialFastFallPlugin : BasePlugin
 {
+    public static AerialFastFallPlugin Instance { get; private set; }
+    
     internal new static ManualLogSource Log;
-
-    private readonly Harmony m_harmony = new Harmony(AerialFastFall_BepInExInfo.PLUGIN_GUID);
     
     private static ConfigEntry<bool> ConfigEnableMod { get; set; }
 
+    private Patches.AerialFastFall_Patcher m_aerialFastFall = new AerialFastFall_Patcher();
+
     public override void Load()
     {
+        Instance = this;
+        
         AerialFastFallPlugin.Log = base.Log;
-
-        ConfigEnableMod = Config.Bind("_Plugin", "EnableMod", true, new ConfigDescription("NO RUNTIME REFRESH.\nShould enable Aerial Fast Fall mod. If enabled, will disable leaderboards."));
         
         // Plugin startup logic
         Log.LogMessage($"Plugin {AerialFastFall_BepInExInfo.PLUGIN_GUID} ({AerialFastFall_BepInExInfo.PLUGIN_NAME}) is loaded!");
 
-        if (ConfigEnableMod.Value)
-        {
-            DisableLeaderboardsPlugin.Enable();
-            BetInExTesting.Patches.AerialFastFall.Patch(this, m_harmony);
-        }
+        m_aerialFastFall.Load(this);
     }
     
     public override bool Unload()
     {
-        m_harmony.UnpatchSelf();
+        m_aerialFastFall.Unload();
         
         return base.Unload();
     }
