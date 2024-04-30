@@ -108,4 +108,9 @@ public class AerialFastFall : AAutoReloadConfig
     {
         BindConfigs();
     }
+
+    public override string GetPatchName()
+    {
+        return "Aerial Fast Fall Patch";
+    }
 }

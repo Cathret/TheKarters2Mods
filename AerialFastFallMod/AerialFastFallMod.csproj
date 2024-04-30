@@ -433,5 +433,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\AutoReloadConfigModSDK\AutoReloadConfigModSDK.csproj" />
+    <ProjectReference Include="..\DisableLeaderboards\DisableLeaderboards.csproj" />
   </ItemGroup>
 </Project>
