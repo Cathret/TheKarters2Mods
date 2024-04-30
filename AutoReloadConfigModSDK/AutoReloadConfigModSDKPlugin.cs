@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using BepInEx;
 using BepInEx.Configuration;
 using BepInEx.Unity.IL2CPP;
 using Il2CppSystem.Threading;
+using String = Il2CppSystem.String;
 
 namespace TheKarters2Mods;
 
@@ -13,7 +15,7 @@ public class AutoReloadConfigModSDKPlugin : BasePlugin
 {
     public static AutoReloadConfigModSDKPlugin Instance { get; private set; }
 
-    private readonly Dictionary<string, AAutoReloadConfig> m_autoReloadPathInstance = new();
+    private readonly Dictionary<string, List<AAutoReloadConfig>> m_autoReloadPathInstance = new();
     
     private FileSystemWatcher m_fileWatcher = null;
     
@@ -24,14 +26,41 @@ public class AutoReloadConfigModSDKPlugin : BasePlugin
 
     public void AddToAutoReload(AAutoReloadConfig _oneAAutoReloadConfig)
     {
-        m_autoReloadPathInstance.Add(_oneAAutoReloadConfig.GetPlugin().Config.ConfigFilePath, _oneAAutoReloadConfig);
-        Log.LogMessage($"{_oneAAutoReloadConfig.GetType().Name} registered to AutoReload");
+        string configFilePath = _oneAAutoReloadConfig.GetPlugin().Config.ConfigFilePath;
+        if (m_autoReloadPathInstance.TryGetValue(configFilePath, out List<AAutoReloadConfig> outAutoReloadConfigList))
+        {
+            if (outAutoReloadConfigList.Contains(_oneAAutoReloadConfig))
+            {
+                Log.LogError($"[{_oneAAutoReloadConfig.GetPatchName()}] is already registered to AutoReload, won't try to register twice");
+                return;
+            }
+            
+            outAutoReloadConfigList.Add(_oneAAutoReloadConfig);
+        }
+        else
+        {
+            m_autoReloadPathInstance.Add(configFilePath, [_oneAAutoReloadConfig]);
+        }
+        
+        Log.LogMessage($"[{_oneAAutoReloadConfig.GetPatchName()}] registered to AutoReload");
     }
     
     public void RemoveFromAutoReload(AAutoReloadConfig _oneAAutoReloadConfig)
     {
-        m_autoReloadPathInstance.Remove(_oneAAutoReloadConfig.GetPlugin().Config.ConfigFilePath);
-        Log.LogMessage($"{_oneAAutoReloadConfig.GetType().Name} unregistered to AutoReload");
+        string configFilePath = _oneAAutoReloadConfig.GetPlugin().Config.ConfigFilePath;
+        if (m_autoReloadPathInstance.TryGetValue(configFilePath, out List<AAutoReloadConfig> outAutoReloadConfigList))
+        {
+            outAutoReloadConfigList.Remove(_oneAAutoReloadConfig);
+            
+            if (outAutoReloadConfigList.Count == 0)
+                m_autoReloadPathInstance.Remove(configFilePath);
+            
+            Log.LogMessage($"[{_oneAAutoReloadConfig.GetPatchName()}] unregistered from AutoReload");
+        }
+        else
+        {
+            Log.LogError($"[{_oneAAutoReloadConfig.GetPatchName()}] could not be unregistered from AutoReload, couldn't find associated config file");
+        }
     }
 
     private void SetupConfigFilesWatcher()
@@ -82,17 +111,19 @@ public class AutoReloadConfigModSDKPlugin : BasePlugin
         string filePath = _e.FullPath;
         if (m_autoReloadPathInstance.TryGetValue(filePath, out var outAutoReloadConfig))
         {
-            Log.LogMessage($"Reloading mod [{outAutoReloadConfig.GetType().Name}]");
-
+            string modsListStr = string.Join(", ", outAutoReloadConfig.Select(_config => _config.GetPatchName()));
+            
             if (WaitForFileAccess(filePath))
             {
-                outAutoReloadConfig.GetPlugin().Config.Reload();;
+                Log.LogMessage($"Reloading mods [{modsListStr}]");
+                
+                outAutoReloadConfig[0].GetPlugin().Config.Reload();
                 
                 m_lastReloadTime = DateTime.Now;
             }
             else
             {
-                Log.LogError($"Couldn't open file [{_e.Name}], couldn't reload Plugin [{outAutoReloadConfig.GetType().Name}]");
+                Log.LogError($"Couldn't open file [{_e.Name}]. Can't reload patch [{modsListStr}]");
             }
         }
     }

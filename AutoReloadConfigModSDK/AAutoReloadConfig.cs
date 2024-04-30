@@ -57,13 +57,18 @@ public abstract class AAutoReloadConfig
     {
         TryUnregisterFromAutoReload();
     }
+
+    private void Internal_LoadConfig(object _sender, EventArgs _e)
+    {
+        LoadConfig();
+    }
     
     public abstract BasePlugin GetPlugin();
 
     protected abstract void LoadConfig();
 
-    private void Internal_LoadConfig(object _sender, EventArgs _e)
+    public virtual string GetPatchName()
     {
-        LoadConfig();
+        return GetType().Name;
     }
 }
