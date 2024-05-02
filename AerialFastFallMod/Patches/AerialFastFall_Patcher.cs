@@ -13,8 +13,10 @@ public class AerialFastFall_Patcher : AAutoReloadConfig
     private bool m_isEnabled = false;
 
     private ConfigEntry<bool> ConfigEnableAerialFastFall { get; set; }
+    private ConfigEntry<bool> ConfigUseSinglePressInput { get; set; }
     
     private readonly FastFallOnPress_ConfigData m_configFastFallOnPress = new FastFallOnPress_ConfigData();
+    private readonly FastFallWhileJoystickInput_ConfigData m_configFastFallWhileJoystickInput = new FastFallWhileJoystickInput_ConfigData();
 
     public bool Load(AerialFastFallPlugin _plugin)
     {
@@ -41,10 +43,19 @@ public class AerialFastFall_Patcher : AAutoReloadConfig
     private void BindConfigs()
     {
         ConfigEnableAerialFastFall = m_plugin.Config.Bind("_Plugin", "EnableAerialFastFall", true, new ConfigDescription("Should enable Aerial Fast Fall mod. If enabled, will disable leaderboards."));
+        ConfigUseSinglePressInput = m_plugin.Config.Bind("_Plugin", "UseSinglePressInput", true, new ConfigDescription("Should use the Single Press input system."));
 
-        m_configFastFallOnPress.ConfigFastFallRate = m_plugin.Config.Bind("AerialFastFall", "FastFallRate", 200f, new ConfigDescription("Fast Fall Rate. The higher, the faster the kart will be directed to the ground.", new AcceptableValueRange<float>(0f, 1000f)));
-        m_configFastFallOnPress.ConfigMinimumJoystickInputBeforeFastFall = m_plugin.Config.Bind("AerialFastFall", "MinimumJoystickInputBeforeFastFall", 0.1f, new ConfigDescription("Minimum Joystick Input Before Fast Fall in Seconds. Fast Fall Deadzone. While the joystick input is lower than this value, the Fast Fall will not be triggered.", new AcceptableValueRange<float>(0f, 1f)));
-        m_configFastFallOnPress.ConfigMinimumJumpTimeBeforeFastFall = m_plugin.Config.Bind("AerialFastFall", "MinimumJumpTimeBeforeFastFall", 0.5f, new ConfigDescription("Minimum Jump Time Before Fast Fall in Seconds. Minimum time after being airborne before Fast Fall is allowed.", new AcceptableValueRange<float>(0f, 5f)));
+        ConfigEntry<float> configFastFallRate = m_plugin.Config.Bind("AerialFastFall", "FastFallRate", 200f, new ConfigDescription("Fast Fall Rate. The higher, the faster the kart will be directed to the ground.", new AcceptableValueRange<float>(0f, 1000f)));
+        ConfigEntry<float> configMinimumJumpTimeBeforeFastFall = m_plugin.Config.Bind("AerialFastFall", "MinimumJumpTimeBeforeFastFall", 0.5f, new ConfigDescription("Minimum Jump Time Before Fast Fall in Seconds. Minimum time after being airborne before Fast Fall is allowed.", new AcceptableValueRange<float>(0f, 5f)));
+        
+        m_configFastFallOnPress.ConfigShouldDodgeOnPress = m_plugin.Config.Bind("AerialFastFall_OnPress", "ShouldDodgeOnPress", true, new ConfigDescription("Should Dodge on Press. If this is set to true, pressing the Fast Fall button will actually make it possible to dodge damages."));
+        m_configFastFallOnPress.ConfigDodgeDurationAfterPress = m_plugin.Config.Bind("AerialFastFall_OnPress", "DodgeDurationAfterPress", 0.5f, new ConfigDescription("Dodge Duration after press in Seconds. If should dodge when Fast Falling, duration of invincibility in seconds after pressing the fast fall button.", new AcceptableValueRange<float>(0.1f, 1f)));
+        m_configFastFallOnPress.ConfigFastFallRate = configFastFallRate;
+        m_configFastFallOnPress.ConfigMinimumJumpTimeBeforeFastFall = configMinimumJumpTimeBeforeFastFall;
+
+        m_configFastFallWhileJoystickInput.ConfigFastFallRate = configFastFallRate;
+        m_configFastFallWhileJoystickInput.ConfigMinimumJoystickInputBeforeFastFall = m_plugin.Config.Bind("AerialFastFall_DirectionInput", "MinimumJoystickInputBeforeFastFall", 0.1f, new ConfigDescription("Minimum Joystick Input Before Fast Fall in Seconds. Fast Fall Deadzone. While the joystick input is lower than this value, the Fast Fall will not be triggered.", new AcceptableValueRange<float>(0f, 1f)));
+        m_configFastFallWhileJoystickInput.ConfigMinimumJumpTimeBeforeFastFall = configMinimumJumpTimeBeforeFastFall;
     }
 
     private void RefreshPatch()
@@ -65,7 +76,11 @@ public class AerialFastFall_Patcher : AAutoReloadConfig
     {
         AerialFastFallPlugin.Log.LogMessage("Enabling AerialFastFall");
 
-        m_harmony.PatchAll(typeof(FastFallOnPress));
+        if (ConfigUseSinglePressInput.Value)
+            FastFallOnPress.Patch(m_harmony);
+        else
+            FastFallWhileJoystickInput.Patch(m_harmony);
+        
         m_isEnabled = true;
     }
 
@@ -91,6 +106,7 @@ public class AerialFastFall_Patcher : AAutoReloadConfig
         if (m_isEnabled)
         {
             FastFallOnPress.LoadConfig(m_configFastFallOnPress);
+            FastFallWhileJoystickInput.LoadConfig(m_configFastFallWhileJoystickInput);
         }
     }
     
