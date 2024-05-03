@@ -1,5 +1,9 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Reflection;
 using BepInEx.Configuration;
+using BepInEx.Unity.IL2CPP.Utils.Collections;
 using HarmonyLib;
 using Rewired;
 using UnityEngine;
@@ -33,14 +37,28 @@ public class FastFallOnPress : AFastFall
         AerialFastFallPlugin.Log.LogInfo($"Loaded FastFallRate value [{ms_fastFallRate}]");
         AerialFastFallPlugin.Log.LogInfo($"Loaded MinimumJumpTimeBeforeFastFall value [{ms_minimumJumpTimeBeforeFastFall}]");
     }
+
+    private class FastFallState
+    {
+        public bool pressedTriangle = false;
+        public bool hasDodge = false;
+    }
+    
+    private static readonly Dictionary<Ant_Player.EAntPlayerNumber, FastFallState> ms_fastfallStatePerPlayer = new Dictionary<Ant_Player.EAntPlayerNumber, FastFallState>();
+    
+    private static Ant_Player.EAntPlayerNumber GetPlayerId(Ant_Player _antPlayer) => _antPlayer.eAntPlayerNr;
+    private static FastFallState GetFallStateForPlayer(Ant_Player _antPlayer) => ms_fastfallStatePerPlayer[GetPlayerId(_antPlayer)];
     
     public static void Patch(Harmony _harmony)
     {
+        foreach (Ant_Player.EAntPlayerNumber onePlayerNb in Enum.GetValues<Ant_Player.EAntPlayerNumber>())
+        {
+            ms_fastfallStatePerPlayer[onePlayerNb] = new FastFallState();
+        }
+        
         _harmony.PatchAll(typeof(Patch_PixelKartPhysics_FixedUpdate));
         _harmony.PatchAll(typeof(Patch_Ant_KartInput_ProcessRacingInput));
     }
-
-    private static bool ms_pressedTriangle = false;
 
     [HarmonyPatch(typeof(PixelKartPhysics), nameof(PixelKartPhysics.FixedUpdate))]
     private class Patch_PixelKartPhysics_FixedUpdate
@@ -49,21 +67,50 @@ public class FastFallOnPress : AFastFall
         {
             AerialFastFallPlugin.Log.LogMessage(original == null ? "self Patch_PixelKartPhysics_FixedUpdate loading" : "patch Patch_PixelKartPhysics_FixedUpdate loading");
         }
+
+        private static IEnumerator StayInvincibleAfterFastFall(HpBarController _hpBarController)
+        {
+            AerialFastFallPlugin.Log.LogDebug($"IMMUNITY START");
+            _hpBarController.ActivateImmunityNow(true);
+            yield return new WaitForSeconds(ms_dodgeDurationAfterPress);
+            _hpBarController.ActivateImmunityNow(false);
+            AerialFastFallPlugin.Log.LogDebug($"IMMUNITY STOP");
+        }
     
         public static void Postfix(PixelKartPhysics __instance)
         {
-            if (!ms_pressedTriangle)
+            PixelEasyCharMoveKartController currentPlayerKartController = __instance.kartController;
+            FastFallState currentPlayerFastFallState = GetFallStateForPlayer(currentPlayerKartController.parentPlayer);
+            if (!currentPlayerFastFallState.pressedTriangle)
                 return;
+            
+            AerialFastFallPlugin.Log.LogDebug($"Pressed Triangle == true");
             
             if (!IsAllowedToFastFall(__instance))
             {
-                ms_pressedTriangle = false; // if we can't fast fall anymore, reset input
+                currentPlayerFastFallState.pressedTriangle = false; // if we can't fast fall anymore, reset input
+                currentPlayerFastFallState.hasDodge = false;
                 return;
             }
-
-            AerialFastFallPlugin.Log.LogDebug($"Fast Falling activated");
             
-            __instance.kartController.AddVelocity(Vector3.down * Time.fixedDeltaTime * ms_fastFallRate);
+            AerialFastFallPlugin.Log.LogDebug($"Allowed to Fast Fall, fast falling");
+            
+            currentPlayerKartController.AddVelocity(Vector3.down * Time.fixedDeltaTime * ms_fastFallRate);
+
+            if (ms_shouldDodgeOnPress)
+            {
+                if (!currentPlayerFastFallState.hasDodge)
+                {
+                    AerialFastFallPlugin.Log.LogDebug($"Has not dodge yet, executing dodge");
+
+                    HpBarController currentPlayerHpController = currentPlayerKartController.parentPlayer.hpBarController;
+                    currentPlayerHpController.StartCoroutine(
+                        StayInvincibleAfterFastFall(currentPlayerHpController)
+                            .WrapToIl2Cpp());
+
+                    currentPlayerFastFallState.hasDodge = true;
+                }
+            }
         }
     
         public static void Cleanup(MethodBase original)
@@ -84,18 +131,15 @@ public class FastFallOnPress : AFastFall
         
         public static void Postfix(Ant_KartInput __instance)
         {
-            AerialFastFallPlugin.Log.LogDebug($"ProcessRacingInput - postfix");
-
             Player player = __instance.player;
             if (player == null)
                 return;
 
-            AerialFastFallPlugin.Log.LogDebug($"Rewired is available");
-            
             if (player.GetButtonDown(REWIRED_INPUT_PS_TRIANGLE))
             {
                 AerialFastFallPlugin.Log.LogDebug($"Pressed Triangle");
-                ms_pressedTriangle = true; // set to false after being used
+                
+                GetFallStateForPlayer(__instance.antPlayer).pressedTriangle = true; // will be set to false after being used
             }
         }
     
