@@ -9,7 +9,7 @@ namespace TheKarters2Mods;
 [BepInPlugin(TwitchCathretCommands_BepInExInfo.PLUGIN_GUID, TwitchCathretCommands_BepInExInfo.PLUGIN_NAME, TwitchCathretCommands_BepInExInfo.PLUGIN_VERSION)]
 [BepInDependency(PluginDependencies.DISABLE_LEADERBOARDS_GUID)]
 [BepInDependency(PluginDependencies.AUTO_RELOAD_CONFIG_GUID)]
-[BepInDependency(PluginDependencies.TWITCH_BASIC_COMMANDS)]
+[BepInDependency(PluginDependencies.TWITCH_BASIC_COMMANDS, ">=0.2.0")]
 public class TwitchCathretCommandsPlugin : BasePlugin
 {
     public static TwitchCathretCommandsPlugin Instance { get; private set; }
