@@ -42,7 +42,7 @@ public class TwitchCathretCommands : AAutoReloadConfig
         TryUnregisterFromAutoReload();
     }
 
-    private void EnabledActivated()
+    private void EnableActivated()
     {
         foreach (ITwitchCommand oneCommand in m_allCathretCommandsInstances)
         {
@@ -68,7 +68,9 @@ public class TwitchCathretCommands : AAutoReloadConfig
     private void RefreshCommands()
     {
         DisableAll();
-        EnabledActivated();
+        
+        if (ConfigActivateCommands.Value)
+            EnableActivated();
     }
 
     public override BasePlugin GetPlugin()
