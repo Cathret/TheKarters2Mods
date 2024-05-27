@@ -1,0 +1,438 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Description>DisableLeaderboardsPlugin</Description>
+    <Version>1.0.0</Version>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <LangVersion>latest</LangVersion>
+    <RestoreAdditionalProjectSources>
+      https://api.nuget.org/v3/index.json;
+      https://nuget.bepinex.dev/v3/index.json;
+      https://nuget.samboy.dev/v3/index.json
+    </RestoreAdditionalProjectSources>
+    <RootNamespace>TheKarters2Mods</RootNamespace>
+    <PackageId>DisableLeaderboards</PackageId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="BepInEx.Unity.IL2CPP" Version="6.0.0-be.*" IncludeAssets="compile" />
+    <PackageReference Include="BepInEx.PluginInfoProps" Version="2.*" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Ak.Wwise.Api.WAAPI">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\Ak.Wwise.Api.WAAPI.dll</HintPath>
+    </Reference>
+    <Reference Include="AK.Wwise.Unity.API">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\AK.Wwise.Unity.API.dll</HintPath>
+    </Reference>
+    <Reference Include="AK.Wwise.Unity.API.WwiseTypes">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\AK.Wwise.Unity.API.WwiseTypes.dll</HintPath>
+    </Reference>
+    <Reference Include="AK.Wwise.Unity.MonoBehaviour">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\AK.Wwise.Unity.MonoBehaviour.dll</HintPath>
+    </Reference>
+    <Reference Include="AK.Wwise.Unity.Timeline">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\AK.Wwise.Unity.Timeline.dll</HintPath>
+    </Reference>
+    <Reference Include="Assembly-CSharp">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\Assembly-CSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="Assembly-CSharp-firstpass">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\Assembly-CSharp-firstpass.dll</HintPath>
+    </Reference>
+    <Reference Include="Boxophobic.AtmosphericHeightFog.Runtime">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\Boxophobic.AtmosphericHeightFog.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Boxophobic.Utils.Scripts">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\Boxophobic.Utils.Scripts.dll</HintPath>
+    </Reference>
+    <Reference Include="ch.sycoforge.Decal">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\ch.sycoforge.Decal.dll</HintPath>
+    </Reference>
+    <Reference Include="com.rlabrecque.steamworks.net">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\com.rlabrecque.steamworks.net.dll</HintPath>
+    </Reference>
+    <Reference Include="com.rowlan.yapp.runtime">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\com.rowlan.yapp.runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Crest">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\Crest.dll</HintPath>
+    </Reference>
+    <Reference Include="Crest.Examples">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\Crest.Examples.dll</HintPath>
+    </Reference>
+    <Reference Include="DamageNumbersPro">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\DamageNumbersPro.dll</HintPath>
+    </Reference>
+    <Reference Include="DOTween">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\DOTween.dll</HintPath>
+    </Reference>
+    <Reference Include="Dreamteck.Splines">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\Dreamteck.Splines.dll</HintPath>
+    </Reference>
+    <Reference Include="Dreamteck.Utilities">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\Dreamteck.Utilities.dll</HintPath>
+    </Reference>
+    <Reference Include="EasyButtons">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\EasyButtons.dll</HintPath>
+    </Reference>
+    <Reference Include="GPUInstancer">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\GPUInstancer.dll</HintPath>
+    </Reference>
+    <Reference Include="HBAO.Demo.Runtime">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\HBAO.Demo.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="HBAO.Runtime">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\HBAO.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Il2CppMono.Security">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\Il2CppMono.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="Il2Cppmscorlib">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\Il2Cppmscorlib.dll</HintPath>
+    </Reference>
+    <Reference Include="Il2CppSystem">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\Il2CppSystem.dll</HintPath>
+    </Reference>
+    <Reference Include="Il2CppSystem.Configuration">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\Il2CppSystem.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="Il2CppSystem.Core">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\Il2CppSystem.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Il2CppSystem.Data">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\Il2CppSystem.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Il2CppSystem.Numerics">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\Il2CppSystem.Numerics.dll</HintPath>
+    </Reference>
+    <Reference Include="Il2CppSystem.Runtime.Serialization">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\Il2CppSystem.Runtime.Serialization.dll</HintPath>
+    </Reference>
+    <Reference Include="Il2CppSystem.Xml">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\Il2CppSystem.Xml.dll</HintPath>
+    </Reference>
+    <Reference Include="Il2CppSystem.Xml.Linq">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\Il2CppSystem.Xml.Linq.dll</HintPath>
+    </Reference>
+    <Reference Include="JBooth.BetterLitShader.Scripts">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\JBooth.BetterLitShader.Scripts.dll</HintPath>
+    </Reference>
+    <Reference Include="MeshBakerCore">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\MeshBakerCore.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Photon3Unity3D">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\Photon3Unity3D.dll</HintPath>
+    </Reference>
+    <Reference Include="PhotonChat">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\PhotonChat.dll</HintPath>
+    </Reference>
+    <Reference Include="PhotonRealtime">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\PhotonRealtime.dll</HintPath>
+    </Reference>
+    <Reference Include="PhotonUnityNetworking">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\PhotonUnityNetworking.dll</HintPath>
+    </Reference>
+    <Reference Include="PhotonUnityNetworking.Demos">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\PhotonUnityNetworking.Demos.dll</HintPath>
+    </Reference>
+    <Reference Include="PhotonUnityNetworking.Utilities">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\PhotonUnityNetworking.Utilities.dll</HintPath>
+    </Reference>
+    <Reference Include="PhotonVoice">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\PhotonVoice.dll</HintPath>
+    </Reference>
+    <Reference Include="PhotonVoice.API">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\PhotonVoice.API.dll</HintPath>
+    </Reference>
+    <Reference Include="PhotonVoice.PUN">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\PhotonVoice.PUN.dll</HintPath>
+    </Reference>
+    <Reference Include="PhotonWebSocket">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\PhotonWebSocket.dll</HintPath>
+    </Reference>
+    <Reference Include="PlayFab">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\PlayFab.dll</HintPath>
+    </Reference>
+    <Reference Include="Rewired_Core">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\Rewired_Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Rewired_Windows">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\Rewired_Windows.dll</HintPath>
+    </Reference>
+    <Reference Include="SimpleMinMaxSlider">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\SimpleMinMaxSlider.dll</HintPath>
+    </Reference>
+    <Reference Include="SoftMask">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\SoftMask.dll</HintPath>
+    </Reference>
+    <Reference Include="SonyPS4CommonDialog">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\SonyPS4CommonDialog.dll</HintPath>
+    </Reference>
+    <Reference Include="SonyPS4SavedGames">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\SonyPS4SavedGames.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Addressables">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\Unity.Addressables.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Animation.Rigging">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\Unity.Animation.Rigging.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Burst">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\Unity.Burst.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Labs.XRLineRenderer">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\Unity.Labs.XRLineRenderer.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Mathematics">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\Unity.Mathematics.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Postprocessing.Runtime">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\Unity.Postprocessing.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.ResourceManager">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\Unity.ResourceManager.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.TextMeshPro">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\Unity.TextMeshPro.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Timeline">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\Unity.Timeline.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.XR.Management">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\Unity.XR.Management.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\UnityEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.AccessibilityModule">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\UnityEngine.AccessibilityModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.AIModule">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\UnityEngine.AIModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.AndroidJNIModule">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\UnityEngine.AndroidJNIModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.AnimationModule">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\UnityEngine.AnimationModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.AssetBundleModule">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\UnityEngine.AssetBundleModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.AudioModule">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\UnityEngine.AudioModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ClothModule">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\UnityEngine.ClothModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ClusterInputModule">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\UnityEngine.ClusterInputModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ClusterRendererModule">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\UnityEngine.ClusterRendererModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.CoreModule">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\UnityEngine.CoreModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.CrashReportingModule">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\UnityEngine.CrashReportingModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.DirectorModule">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\UnityEngine.DirectorModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.DSPGraphModule">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\UnityEngine.DSPGraphModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.GameCenterModule">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\UnityEngine.GameCenterModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.GIModule">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\UnityEngine.GIModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.GridModule">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\UnityEngine.GridModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.HotReloadModule">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\UnityEngine.HotReloadModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ImageConversionModule">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\UnityEngine.ImageConversionModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.IMGUIModule">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\UnityEngine.IMGUIModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.InputLegacyModule">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\UnityEngine.InputLegacyModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.InputModule">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\UnityEngine.InputModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.JSONSerializeModule">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\UnityEngine.JSONSerializeModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.LocalizationModule">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\UnityEngine.LocalizationModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ParticleSystemModule">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\UnityEngine.ParticleSystemModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.PerformanceReportingModule">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\UnityEngine.PerformanceReportingModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.Physics2DModule">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\UnityEngine.Physics2DModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.PhysicsModule">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\UnityEngine.PhysicsModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ProfilerModule">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\UnityEngine.ProfilerModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.RuntimeInitializeOnLoadManagerInitializerModule">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\UnityEngine.RuntimeInitializeOnLoadManagerInitializerModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ScreenCaptureModule">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\UnityEngine.ScreenCaptureModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.SharedInternalsModule">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\UnityEngine.SharedInternalsModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.SpatialTracking">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\UnityEngine.SpatialTracking.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.SpriteMaskModule">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\UnityEngine.SpriteMaskModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.SpriteShapeModule">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\UnityEngine.SpriteShapeModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.StreamingModule">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\UnityEngine.StreamingModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.SubstanceModule">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\UnityEngine.SubstanceModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.SubsystemsModule">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\UnityEngine.SubsystemsModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.TerrainModule">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\UnityEngine.TerrainModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.TerrainPhysicsModule">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\UnityEngine.TerrainPhysicsModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.TextCoreModule">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\UnityEngine.TextCoreModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.TextRenderingModule">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\UnityEngine.TextRenderingModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.TilemapModule">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\UnityEngine.TilemapModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.TLSModule">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\UnityEngine.TLSModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UI">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\UnityEngine.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UIElementsModule">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\UnityEngine.UIElementsModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UIElementsNativeModule">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\UnityEngine.UIElementsNativeModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UIModule">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\UnityEngine.UIModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UmbraModule">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\UnityEngine.UmbraModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UNETModule">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\UnityEngine.UNETModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UnityAnalyticsCommonModule">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\UnityEngine.UnityAnalyticsCommonModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UnityAnalyticsModule">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\UnityEngine.UnityAnalyticsModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UnityConnectModule">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\UnityEngine.UnityConnectModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UnityCurlModule">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\UnityEngine.UnityCurlModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UnityTestProtocolModule">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\UnityEngine.UnityTestProtocolModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UnityWebRequestAssetBundleModule">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\UnityEngine.UnityWebRequestAssetBundleModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UnityWebRequestAudioModule">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\UnityEngine.UnityWebRequestAudioModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UnityWebRequestModule">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\UnityEngine.UnityWebRequestModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UnityWebRequestTextureModule">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\UnityEngine.UnityWebRequestTextureModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UnityWebRequestWWWModule">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\UnityEngine.UnityWebRequestWWWModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.VehiclesModule">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\UnityEngine.VehiclesModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.VFXModule">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\UnityEngine.VFXModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.VideoModule">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\UnityEngine.VideoModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.VirtualTexturingModule">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\UnityEngine.VirtualTexturingModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.VRModule">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\UnityEngine.VRModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.WindModule">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\UnityEngine.WindModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.XRModule">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\UnityEngine.XRModule.dll</HintPath>
+    </Reference>
+    <Reference Include="VisualDesignCafe.Memory">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\VisualDesignCafe.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="VisualDesignCafe.Nature">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\VisualDesignCafe.Nature.dll</HintPath>
+    </Reference>
+    <Reference Include="VisualDesignCafe.Packages">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\VisualDesignCafe.Packages.dll</HintPath>
+    </Reference>
+    <Reference Include="VisualDesignCafe.Rendering.Nature">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\VisualDesignCafe.Rendering.Nature.dll</HintPath>
+    </Reference>
+    <Reference Include="VisualDesignCafe.ShaderX">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\VisualDesignCafe.ShaderX.dll</HintPath>
+    </Reference>
+    <Reference Include="VisualDesignCafe.Threading">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\VisualDesignCafe.Threading.dll</HintPath>
+    </Reference>
+    <Reference Include="Whinarn.UnityMeshSimplifier.Runtime">
+      <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\Whinarn.UnityMeshSimplifier.Runtime.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AutoReloadConfigModSDK\AutoReloadConfigModSDK.csproj" />
+    <ProjectReference Include="..\DisableLeaderboards\DisableLeaderboards.csproj" />
+  </ItemGroup>
+</Project>
