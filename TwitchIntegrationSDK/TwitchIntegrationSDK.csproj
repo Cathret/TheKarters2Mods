@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
-    <Description>DisableLeaderboardsPlugin</Description>
+    <Description>TwitchIntegrationSDKPlugin</Description>
     <Version>1.0.0</Version>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <LangVersion>latest</LangVersion>
@@ -12,7 +12,7 @@
       https://nuget.samboy.dev/v3/index.json
     </RestoreAdditionalProjectSources>
     <RootNamespace>TheKarters2Mods</RootNamespace>
-    <PackageId>DisableLeaderboards</PackageId>
+    <PackageId>TwitchIntegrationSDK</PackageId>
   </PropertyGroup>
 
   <ItemGroup>

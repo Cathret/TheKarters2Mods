@@ -12,32 +12,33 @@ public class TwitchIntegrationSDK_ChatManager : MonoBehaviour
     private TcpClient m_twitchClient = null;
     private StreamReader m_reader = null;
     private StreamWriter m_writer = null;
-    
-    public void OnEnable()
+
+    public void Awake()
     {
-        TwitchIntegrationSDKPlugin.Log.LogInfo("Twitch Integration Component AWAKE");
+        TwitchIntegrationSDKPlugin.Log.LogDebug("Twitch Integration Component AWAKE");
 
-        TryConnectToTwitch();
+        ConnectToTwitch();
 
-        if (m_twitchClient != null && m_twitchClient.Connected)
+        if (m_twitchClient == null)
         {
-            TwitchIntegrationSDKPlugin.Log.LogInfo("TwitchIntegrationComponent.Awake() - Connected!");
-            return;
+            TwitchIntegrationSDKPlugin.Log.LogError("Twitch Integration Component FAILED TO LOAD");
         }
-        
-        TwitchIntegrationSDKPlugin.Log.LogWarning("TwitchIntegrationComponent.Awake() - could not connect to chat, destroying instance!");
-        enabled = false;
-        TwitchIntegrationSDK.UnPatch();
+        else if (!m_twitchClient.Connected)
+        {
+            TwitchIntegrationSDKPlugin.Log.LogWarning("Twitch Integration Component WILL RETRY TO CONNECT");
+        }
+        else
+        {
+            TwitchIntegrationSDKPlugin.Log.LogInfo("Twitch Integration Component CONNECTED");
+        }
     }
 
     public void Update()
     {
-        if (!m_twitchClient.Connected)
-            TryConnectToTwitch();
         ReadChat();
     }
 
-    private bool TryConnectToTwitch()
+    private bool ConnectToTwitch()
     {
         m_twitchClient = new TcpClient("irc.chat.twitch.tv", 6667);
         
@@ -63,6 +64,9 @@ public class TwitchIntegrationSDK_ChatManager : MonoBehaviour
 
     private bool ReadChat()
     {
+        if (m_twitchClient == null)
+            return false;
+        
         if (m_twitchClient.Available <= 0)
             return false;
 

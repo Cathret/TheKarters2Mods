@@ -31,6 +31,12 @@ public class TwitchIntegrationSDK
     public static string TwitchOAuthToken { get; private set; }
     public static string TwitchChannelName { get; private set; }
 
+    public static Action<string, string> OnTwitchChatMessage
+    {
+        get => Injections.TwitchIntegrationSDK_EventManager.onTwitchChatMessage;
+        set => Injections.TwitchIntegrationSDK_EventManager.onTwitchChatMessage = value;
+    }
+
     public static void LoadConfig(TwitchIntegrationSDK_ConfigData _configData)
     {
         TwitchUserName = _configData.ConfigUserName.Value;
@@ -61,6 +67,8 @@ public class TwitchIntegrationSDK
 
     private static void CreateTwitchIntegrationObject()
     {
+        TwitchIntegrationSDKPlugin.Log.LogInfo($"CREATING Twitch Integration GameObject");
+
         TwitchObject = new GameObject("TwitchIntegrationSDK_GO");
         Object.DontDestroyOnLoad(TwitchObject);
         
@@ -70,6 +78,8 @@ public class TwitchIntegrationSDK
     
     private static bool DeleteInstanceGameObject()
     {
+        TwitchIntegrationSDKPlugin.Log.LogInfo($"DELETING Twitch Integration GameObject");
+
         if (TwitchObject == null)
             return false;
         
