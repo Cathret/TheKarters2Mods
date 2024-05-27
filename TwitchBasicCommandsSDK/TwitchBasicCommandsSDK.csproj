@@ -12,7 +12,7 @@
       https://nuget.samboy.dev/v3/index.json
     </RestoreAdditionalProjectSources>
     <RootNamespace>TheKarters2Mods</RootNamespace>
-    <PackageId>TwitchBasicInteractions</PackageId>
+    <PackageId>TwitchBasicCommandsSDK</PackageId>
   </PropertyGroup>
 
   <ItemGroup>

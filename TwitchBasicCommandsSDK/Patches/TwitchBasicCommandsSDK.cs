@@ -6,7 +6,7 @@ using TheKartersModdingAssistant;
 
 namespace TheKarters2Mods.Patches;
 
-public class TwitchBasicInteractions : AAutoReloadConfig
+public class TwitchBasicCommandsSDK : AAutoReloadConfig
 {
     private DateTime m_lastInteractionTime = DateTime.Now;
     
@@ -38,7 +38,7 @@ public class TwitchBasicInteractions : AAutoReloadConfig
 
         m_isActive = true;
         
-        TwitchBasicInteractionsPlugin.Log.LogDebug($"Twitch Basic Interaction Enabled");
+        TwitchBasicCommandsSDKPlugin.Log.LogDebug($"Twitch Basic Interaction Enabled");
     }
 
     private void DisableMod()
@@ -47,7 +47,7 @@ public class TwitchBasicInteractions : AAutoReloadConfig
         
         m_isActive = false;
         
-        TwitchBasicInteractionsPlugin.Log.LogDebug($"Twitch Basic Interaction Disabled");
+        TwitchBasicCommandsSDKPlugin.Log.LogDebug($"Twitch Basic Interaction Disabled");
     }
 
     private void OnTwitchChatMessage(string _user, string _message)
@@ -65,7 +65,7 @@ public class TwitchBasicInteractions : AAutoReloadConfig
         
         if (splittedMessage.Length == 2 && splittedMessage[1].Equals("death"))
         {
-            TwitchBasicInteractionsPlugin.Log.LogDebug($"{_user} requires death");
+            TwitchBasicCommandsSDKPlugin.Log.LogDebug($"{_user} requires death");
 
             TwitchIntegrationSDK.TwitchChatManager.WriteToChat("Sad day for life today...");
 
@@ -74,7 +74,7 @@ public class TwitchBasicInteractions : AAutoReloadConfig
             {
                 if (onePlayer.IsHuman())
                 {
-                    TwitchBasicInteractionsPlugin.Log.LogDebug($"Killing Player");
+                    TwitchBasicCommandsSDKPlugin.Log.LogDebug($"Killing Player");
 
                     onePlayer.uHpBarController.Death();
                 }
@@ -85,7 +85,7 @@ public class TwitchBasicInteractions : AAutoReloadConfig
 
         if (splittedMessage.Length >= 2 && splittedMessage[1].StartsWith("boost"))
         {
-            TwitchBasicInteractionsPlugin.Log.LogDebug($"{_user} requires boost");
+            TwitchBasicCommandsSDKPlugin.Log.LogDebug($"{_user} requires boost");
 
             int boostValue = 85;
             if (splittedMessage.Length == 3)
@@ -98,7 +98,7 @@ public class TwitchBasicInteractions : AAutoReloadConfig
             {
                 if (onePlayer.IsHuman())
                 {
-                    TwitchBasicInteractionsPlugin.Log.LogDebug($"Setting player raw reserve to {boostValue}");
+                    TwitchBasicCommandsSDKPlugin.Log.LogDebug($"Setting player raw reserve to {boostValue}");
 
                     onePlayer.SetCurrentReserve(boostValue);
                 }
@@ -110,21 +110,21 @@ public class TwitchBasicInteractions : AAutoReloadConfig
 
     public override BasePlugin GetPlugin()
     {
-        return TwitchBasicInteractionsPlugin.Instance;
+        return TwitchBasicCommandsSDKPlugin.Instance;
     }
 
     protected override void LoadConfig()
     {
-        ConfigActivateInteractions = TwitchBasicInteractionsPlugin.Instance.Config.Bind("_Plugin", "Activate Mod", true, new ConfigDescription("Should the mod be activated and interact with Twitch Chat"));
+        ConfigActivateInteractions = TwitchBasicCommandsSDKPlugin.Instance.Config.Bind("_Plugin", "Activate Mod", true, new ConfigDescription("Should the mod be activated and interact with Twitch Chat"));
         
-        ConfigMinTimeBetweenInteractionsInSeconds = TwitchBasicInteractionsPlugin.Instance.Config.Bind("TwitchBasicInteractions", "Minimum Time Between Interactions", 5.0f, new ConfigDescription("In Seconds.\nMinimum time between two interactions from Twitch Chat."));
-        ConfigCommandPrefix = TwitchBasicInteractionsPlugin.Instance.Config.Bind("TwitchBasicInteractions", "Command Prefix", "#tk2", new ConfigDescription("Prefix of the commands to be used by this Twitch Interaction Bot."));
+        ConfigMinTimeBetweenInteractionsInSeconds = TwitchBasicCommandsSDKPlugin.Instance.Config.Bind("TwitchBasicCommandsSDK", "Minimum Time Between Interactions", 5.0f, new ConfigDescription("In Seconds.\nMinimum time between two interactions from Twitch Chat."));
+        ConfigCommandPrefix = TwitchBasicCommandsSDKPlugin.Instance.Config.Bind("TwitchBasicCommandsSDK", "Command Prefix", "#tk2", new ConfigDescription("Prefix of the commands to be used by this Twitch Interaction Bot."));
         
         m_minTimeBetweenInteractions = ConfigMinTimeBetweenInteractionsInSeconds.Value;
         m_prefix = ConfigCommandPrefix.Value;
 
-        TwitchBasicInteractionsPlugin.Log.LogInfo($"Loaded MinTimeBetweenInteractionsInSeconds value [{m_minTimeBetweenInteractions}]");
-        TwitchBasicInteractionsPlugin.Log.LogInfo($"Loaded CommandPrefix value [{m_prefix}]");
+        TwitchBasicCommandsSDKPlugin.Log.LogInfo($"Loaded MinTimeBetweenInteractionsInSeconds value [{m_minTimeBetweenInteractions}]");
+        TwitchBasicCommandsSDKPlugin.Log.LogInfo($"Loaded CommandPrefix value [{m_prefix}]");
 
         if (m_isActive != ConfigActivateInteractions.Value)
         {

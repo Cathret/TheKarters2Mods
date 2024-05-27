@@ -8,7 +8,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoReloadConfigModSDK", "A
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TwitchIntegrationSDK", "TwitchIntegrationSDK\TwitchIntegrationSDK.csproj", "{F006C884-8E9E-4D86-93EE-8F4592E312CA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TwitchBasicInteractions", "TwitchBasicInteractions\TwitchBasicInteractions.csproj", "{6995DFCD-B53D-4D87-854A-647FCA217B7C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TwitchBasicCommandsSDK", "TwitchBasicCommandsSDK\TwitchBasicCommandsSDK.csproj", "{6995DFCD-B53D-4D87-854A-647FCA217B7C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
