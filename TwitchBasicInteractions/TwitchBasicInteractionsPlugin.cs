@@ -9,7 +9,7 @@ namespace TheKarters2Mods;
 [BepInPlugin(TwitchBasicInteractions_BepInExInfo.PLUGIN_GUID, TwitchBasicInteractions_BepInExInfo.PLUGIN_NAME, TwitchBasicInteractions_BepInExInfo.PLUGIN_VERSION)]
 public class TwitchBasicInteractionsPlugin : BasePlugin
 {
-    private static TwitchBasicInteractionsPlugin Instance { get; set; }
+    public static TwitchBasicInteractionsPlugin Instance { get; private set; }
 
     internal new static ManualLogSource Log;
 
