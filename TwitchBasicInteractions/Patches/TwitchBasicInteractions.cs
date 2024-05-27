@@ -8,6 +8,8 @@ namespace TheKarters2Mods.Patches;
 
 public class TwitchBasicInteractions
 {
+    private string m_prefix = "#tk2";
+    
     public void Init()
     {
         TwitchIntegrationSDK.OnTwitchChatMessage += OnTwitchChatMessage;
@@ -20,26 +22,47 @@ public class TwitchBasicInteractions
 
     private void OnTwitchChatMessage(string _user, string _message)
     {
-        if (_user.Equals("cathret") && _message.Equals("death"))
+        string[] splittedMessage = _message.Split(' ');
+
+        if (!splittedMessage[0].Equals(m_prefix))
+            return;
+        
+        if (splittedMessage.Length == 2 && splittedMessage[1].Equals("death"))
         {
+            TwitchBasicInteractionsPlugin.Log.LogDebug($"{_user} requires death");
+
+            TwitchIntegrationSDK.TwitchChatManager.WriteToChat("Sad day for life today...");
+
             List<Player> allPlayers = Player.GetPlayers();
             foreach (Player onePlayer in allPlayers)
             {
                 if (onePlayer.IsHuman())
                 {
-                    onePlayer.SetCurrentHealth(0);
+                    TwitchBasicInteractionsPlugin.Log.LogDebug($"Killing Player");
+
+                    onePlayer.uHpBarController.Death();
                 }
             }
         }
-        
-        if (_user.Equals("cathret") && _message.Equals("boost"))
+
+        if (splittedMessage.Length >= 2 && splittedMessage[1].StartsWith("boost"))
         {
+            TwitchBasicInteractionsPlugin.Log.LogDebug($"{_user} requires boost");
+
+            int boostValue = 85;
+            if (splittedMessage.Length == 3)
+            {
+                boostValue = int.Parse(splittedMessage[2]);
+            }
+
             List<Player> allPlayers = Player.GetPlayers();
             foreach (Player onePlayer in allPlayers)
             {
                 if (onePlayer.IsHuman())
                 {
-                    onePlayer.SetCurrentBoostNumber(200);
+                    TwitchBasicInteractionsPlugin.Log.LogDebug($"Setting player raw reserve to {boostValue}");
+
+                    onePlayer.SetCurrentReserve(boostValue);
                 }
             }
         }
