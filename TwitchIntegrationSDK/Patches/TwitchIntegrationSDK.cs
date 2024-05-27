@@ -1,14 +1,7 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Reflection;
 using BepInEx.Configuration;
-using BepInEx.Unity.IL2CPP.Utils.Collections;
-using HarmonyLib;
 using Il2CppInterop.Runtime.Injection;
-using Rewired;
 using UnityEngine;
-using Object = UnityEngine.Object;
 
 namespace TheKarters2Mods.Patches;
 
@@ -70,7 +63,7 @@ public class TwitchIntegrationSDK
         TwitchIntegrationSDKPlugin.Log.LogInfo($"CREATING Twitch Integration GameObject");
 
         TwitchObject = new GameObject("TwitchIntegrationSDK_GO");
-        Object.DontDestroyOnLoad(TwitchObject);
+        UnityEngine.Object.DontDestroyOnLoad(TwitchObject);
         
         TwitchChatManager = TwitchObject.AddComponent<Injections.TwitchIntegrationSDK_ChatManager>();
         TwitchEventManager = TwitchObject.AddComponent<Injections.TwitchIntegrationSDK_EventManager>();
@@ -83,7 +76,7 @@ public class TwitchIntegrationSDK
         if (TwitchObject == null)
             return false;
         
-        Object.Destroy(TwitchObject);
+        UnityEngine.Object.Destroy(TwitchObject);
 
         TwitchChatManager = null;
         TwitchEventManager = null;

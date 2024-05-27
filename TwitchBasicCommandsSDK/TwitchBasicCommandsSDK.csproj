@@ -177,9 +177,6 @@
     <Reference Include="SonyPS4SavedGames">
       <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\SonyPS4SavedGames.dll</HintPath>
     </Reference>
-    <Reference Include="TheKartersModdingAssistant">
-      <HintPath>..\..\TheKartersModdingAssistant_v0.1.3\TheKartersModdingAssistant.dll</HintPath>
-    </Reference>
     <Reference Include="Unity.Addressables">
       <HintPath>G:\SteamLibrary\steamapps\common\The Karters 2 Turbo Charged - Prologue\BepInEx\interop\Unity.Addressables.dll</HintPath>
     </Reference>

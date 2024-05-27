@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using BepInEx.Configuration;
 using BepInEx.Unity.IL2CPP;
-using TheKartersModdingAssistant;
 
 namespace TheKarters2Mods.Patches;
 
 public class TwitchBasicCommandsSDK : AAutoReloadConfig
 {
+    public static TwitchBasicCommandsSDK Instance { get; private set; }
+    
     private DateTime m_lastInteractionTime = DateTime.Now;
     
     private ConfigEntry<bool> ConfigActivateInteractions { get; set; }
@@ -17,9 +18,19 @@ public class TwitchBasicCommandsSDK : AAutoReloadConfig
     private bool m_isActive = false;
     private string m_prefix = "#tk2";
     private float m_minTimeBetweenInteractions = 5.0f;
+
+    private readonly List<ITwitchCommand> m_listBasicCommands = new List<ITwitchCommand>();
     
     public void Init()
     {
+        if (Instance != null)
+        {
+            TwitchBasicCommandsSDKPlugin.Log.LogError($"Instance of Basic Commands SDK already existing, cancel Init");
+            return;
+        }
+        
+        Instance = this;
+        
         RegisterToAutoReload();
         LoadConfig();
     }
@@ -30,6 +41,24 @@ public class TwitchBasicCommandsSDK : AAutoReloadConfig
             DisableMod();
         
         TryUnregisterFromAutoReload();
+
+        Instance = null;
+    }
+
+    public void RegisterCommand(ITwitchCommand _twitchCommand)
+    {
+        if (!m_listBasicCommands.Contains(_twitchCommand))
+        {
+            m_listBasicCommands.Add(_twitchCommand);
+        }
+    }
+    
+    public void UnregisterCommand(ITwitchCommand _twitchCommand)
+    {
+        if (m_listBasicCommands.Contains(_twitchCommand))
+        {
+            m_listBasicCommands.Remove(_twitchCommand);
+        }
     }
 
     private void EnableMod()
@@ -50,61 +79,37 @@ public class TwitchBasicCommandsSDK : AAutoReloadConfig
         TwitchBasicCommandsSDKPlugin.Log.LogDebug($"Twitch Basic Interaction Disabled");
     }
 
-    private void OnTwitchChatMessage(string _user, string _message)
+    private bool CanInteract()
     {
         TimeSpan timeSinceLastInteraction = DateTime.Now - m_lastInteractionTime;
-        if (timeSinceLastInteraction.Seconds <= m_minTimeBetweenInteractions)
-        {
+        return timeSinceLastInteraction.Seconds > m_minTimeBetweenInteractions;
+    }
+
+    private void ResetInteractionTimer()
+    {
+        m_lastInteractionTime = DateTime.Now;
+    }
+
+    private void OnTwitchChatMessage(string _user, string _message)
+    {
+        if (!CanInteract())
             return;
-        }
         
         string[] splittedMessage = _message.Split(' ');
-
         if (!splittedMessage[0].Equals(m_prefix))
             return;
         
-        if (splittedMessage.Length == 2 && splittedMessage[1].Equals("death"))
+        foreach (ITwitchCommand oneTwitchCommand in m_listBasicCommands)
         {
-            TwitchBasicCommandsSDKPlugin.Log.LogDebug($"{_user} requires death");
-
-            TwitchIntegrationSDK.TwitchChatManager.WriteToChat("Sad day for life today...");
-
-            List<Player> allPlayers = Player.GetPlayers();
-            foreach (Player onePlayer in allPlayers)
+            if (oneTwitchCommand.ShouldExecuteCommand(_user, splittedMessage))
             {
-                if (onePlayer.IsHuman())
+                if (oneTwitchCommand.ExecuteCommand(_user, splittedMessage))
                 {
-                    TwitchBasicCommandsSDKPlugin.Log.LogDebug($"Killing Player");
-
-                    onePlayer.uHpBarController.Death();
+                    TwitchIntegrationSDK.TwitchChatManager.WriteToChat(oneTwitchCommand.CommandFeedback(_user, splittedMessage));
+                    ResetInteractionTimer();
+                    return;
                 }
             }
-            
-            m_lastInteractionTime = DateTime.Now;
-        }
-
-        if (splittedMessage.Length >= 2 && splittedMessage[1].StartsWith("boost"))
-        {
-            TwitchBasicCommandsSDKPlugin.Log.LogDebug($"{_user} requires boost");
-
-            int boostValue = 85;
-            if (splittedMessage.Length == 3)
-            {
-                boostValue = int.Parse(splittedMessage[2]);
-            }
-
-            List<Player> allPlayers = Player.GetPlayers();
-            foreach (Player onePlayer in allPlayers)
-            {
-                if (onePlayer.IsHuman())
-                {
-                    TwitchBasicCommandsSDKPlugin.Log.LogDebug($"Setting player raw reserve to {boostValue}");
-
-                    onePlayer.SetCurrentReserve(boostValue);
-                }
-            }
-            
-            m_lastInteractionTime = DateTime.Now;
         }
     }
 
@@ -137,6 +142,6 @@ public class TwitchBasicCommandsSDK : AAutoReloadConfig
 
     public override string GetPatchName()
     {
-        return "Twitch Basic Interactions";
+        return "Twitch Basic Commands SDK";
     }
 }
