@@ -119,9 +119,12 @@ public class TwitchBasicInteractions : AAutoReloadConfig
         
         ConfigMinTimeBetweenInteractionsInSeconds = TwitchBasicInteractionsPlugin.Instance.Config.Bind("TwitchBasicInteractions", "Minimum Time Between Interactions", 5.0f, new ConfigDescription("In Seconds.\nMinimum time between two interactions from Twitch Chat."));
         ConfigCommandPrefix = TwitchBasicInteractionsPlugin.Instance.Config.Bind("TwitchBasicInteractions", "Command Prefix", "#tk2", new ConfigDescription("Prefix of the commands to be used by this Twitch Interaction Bot."));
-
+        
         m_minTimeBetweenInteractions = ConfigMinTimeBetweenInteractionsInSeconds.Value;
         m_prefix = ConfigCommandPrefix.Value;
+
+        TwitchBasicInteractionsPlugin.Log.LogInfo($"Loaded MinTimeBetweenInteractionsInSeconds value [{m_minTimeBetweenInteractions}]");
+        TwitchBasicInteractionsPlugin.Log.LogInfo($"Loaded CommandPrefix value [{m_prefix}]");
 
         if (m_isActive != ConfigActivateInteractions.Value)
         {
