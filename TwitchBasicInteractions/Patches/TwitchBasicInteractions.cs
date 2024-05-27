@@ -37,6 +37,8 @@ public class TwitchBasicInteractions : AAutoReloadConfig
         TwitchIntegrationSDK.OnTwitchChatMessage += OnTwitchChatMessage;
 
         m_isActive = true;
+        
+        TwitchBasicInteractionsPlugin.Log.LogDebug($"Twitch Basic Interaction Enabled");
     }
 
     private void DisableMod()
@@ -44,6 +46,8 @@ public class TwitchBasicInteractions : AAutoReloadConfig
         TwitchIntegrationSDK.OnTwitchChatMessage -= OnTwitchChatMessage;
         
         m_isActive = false;
+        
+        TwitchBasicInteractionsPlugin.Log.LogDebug($"Twitch Basic Interaction Disabled");
     }
 
     private void OnTwitchChatMessage(string _user, string _message)
