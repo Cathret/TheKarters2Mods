@@ -3,7 +3,6 @@ using System.IO;
 using System.Net.Sockets;
 using BepInEx;
 using UnityEngine;
-using Object = UnityEngine.Object;
 
 namespace TheKarters2Mods.Patches.Injections;
 
@@ -33,7 +32,7 @@ public class TwitchIntegrationSDK_ChatManager : MonoBehaviour
         }
     }
 
-    public void Update()
+    public void FixedUpdate()
     {
         ReadChat();
     }
