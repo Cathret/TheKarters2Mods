@@ -4,7 +4,7 @@ using TheKartersModdingAssistant;
 
 namespace TheKarters2Mods.Patches.Commands;
 
-public class TwitchCathretCommand_SetReserve : ITwitchCommand
+public class TwitchCathretCommand_ReserveSet : ITwitchCommand
 {
     public bool IsActivated()
     {
