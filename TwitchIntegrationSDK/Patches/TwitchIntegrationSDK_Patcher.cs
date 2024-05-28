@@ -1,5 +1,6 @@
 ﻿using BepInEx.Configuration;
 using BepInEx.Unity.IL2CPP;
+using Il2CppInterop.Runtime.Injection;
 
 namespace TheKarters2Mods.Patches;
 
