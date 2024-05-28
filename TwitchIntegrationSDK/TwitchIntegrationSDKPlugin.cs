@@ -7,6 +7,7 @@ using BepInEx.Unity.IL2CPP;
 namespace TheKarters2Mods;
 
 [BepInPlugin(TwitchIntegrationSDK_BepInExInfo.PLUGIN_GUID, TwitchIntegrationSDK_BepInExInfo.PLUGIN_NAME, TwitchIntegrationSDK_BepInExInfo.PLUGIN_VERSION)]
+[BepInDependency(DisableLeaderboards_BepInExInfo.PLUGIN_GUID)]
 public class TwitchIntegrationSDKPlugin : BasePlugin
 {
     private static TwitchIntegrationSDKPlugin Instance { get; set; }

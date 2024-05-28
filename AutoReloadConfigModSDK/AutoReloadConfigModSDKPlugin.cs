@@ -5,8 +5,6 @@ using System.Linq;
 using BepInEx;
 using BepInEx.Configuration;
 using BepInEx.Unity.IL2CPP;
-using Il2CppSystem.Threading;
-using String = Il2CppSystem.String;
 
 namespace TheKarters2Mods;
 

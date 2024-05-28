@@ -1,19 +1,19 @@
 ﻿using BepInEx;
 using BepInEx.Logging;
 using BepInEx.Unity.IL2CPP;
-using HarmonyLib;
-using TheKarters2Mods.Patches;
 
 namespace TheKarters2Mods;
 
 [BepInPlugin(TwitchBasicCommandsSDK_BepInExInfo.PLUGIN_GUID, TwitchBasicCommandsSDK_BepInExInfo.PLUGIN_NAME, TwitchBasicCommandsSDK_BepInExInfo.PLUGIN_VERSION)]
+[BepInDependency(DisableLeaderboards_BepInExInfo.PLUGIN_GUID)]
+[BepInDependency(TwitchIntegrationSDK_BepInExInfo.PLUGIN_GUID)]
 public class TwitchBasicCommandsSDKPlugin : BasePlugin
 {
     public static TwitchBasicCommandsSDKPlugin Instance { get; private set; }
 
     internal new static ManualLogSource Log;
 
-    private static Patches.TwitchBasicCommandsSDK ms_twitchCommandsSDK = new TwitchBasicCommandsSDK(); 
+    private static Patches.TwitchBasicCommandsSDK ms_twitchCommandsSDK = new Patches.TwitchBasicCommandsSDK(); 
     
     public override void Load()
     {
