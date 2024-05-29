@@ -9,6 +9,7 @@ Makes possible to **kill player** in specific position, all humans, all AIs. It'
 - **Disable Leaderboards** v1.0.0
 - **Auto Reload Config Mod SDK** v1.0.0
 - **Twitch Basic Commands SDK** v1.0.0
+- **The Karters Modding Assistant** v0.2.0 by [@Arca](https://github.com/iArcadia), available [here](https://github.com/The-Karters-Community/The-Karters-Modding-Assistant-SDK)
 
 ## Available Commands
 
