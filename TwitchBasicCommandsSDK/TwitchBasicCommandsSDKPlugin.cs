@@ -6,6 +6,7 @@ namespace TheKarters2Mods;
 
 [BepInPlugin(TwitchBasicCommandsSDK_BepInExInfo.PLUGIN_GUID, TwitchBasicCommandsSDK_BepInExInfo.PLUGIN_NAME, TwitchBasicCommandsSDK_BepInExInfo.PLUGIN_VERSION)]
 [BepInDependency(DisableLeaderboards_BepInExInfo.PLUGIN_GUID)]
+[BepInDependency(AutoReloadConfigModSDK_BepInExInfo.PLUGIN_GUID)]
 [BepInDependency(TwitchIntegrationSDK_BepInExInfo.PLUGIN_GUID)]
 public class TwitchBasicCommandsSDKPlugin : BasePlugin
 {
