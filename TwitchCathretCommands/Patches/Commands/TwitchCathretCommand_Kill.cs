@@ -38,6 +38,14 @@ public class TwitchCathretCommand_Kill : ITwitchCommand
             case "ais":
                 return KillAllAis();
             
+            case "karter":
+            {
+                if (_command.Length != 4)
+                    return false;
+                
+                return TryKillWithName(_command[3]);
+            }    
+            
             default:
                 return false;
         }
@@ -75,6 +83,17 @@ public class TwitchCathretCommand_Kill : ITwitchCommand
             oneAi.uHpBarController.Death();
         }
 
+        return true;
+    }
+
+    private bool TryKillWithName(string _karterName)
+    {
+        Player player = Player.GetPlayers().Find(_player => _player.GetName().Equals(_karterName));
+        if (player == null)
+            return false;
+        
+        player.uHpBarController.Death();
+        
         return true;
     }
 

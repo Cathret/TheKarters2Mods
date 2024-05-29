@@ -13,15 +13,15 @@ public class TwitchCathretCommands : AAutoReloadConfig
     
     private DateTime m_lastInteractionTime = DateTime.Now;
     
-    internal ConfigEntry<bool> ConfigActivateCommands { get; set; }
+    internal ConfigEntry<bool> ConfigActivateCommands { get; private set; }
     
-    internal ConfigEntry<bool> ConfigKillCommand { get; set; }
-    internal ConfigEntry<bool> ConfigRemoveHealthCommand { get; set; }
-    internal ConfigEntry<bool> ConfigAddHealthCommand { get; set; }
+    internal ConfigEntry<bool> ConfigKillCommand { get; private set; }
+    internal ConfigEntry<bool> ConfigRemoveHealthCommand { get; private set; }
+    internal ConfigEntry<bool> ConfigAddHealthCommand { get; private set; }
     
-    internal ConfigEntry<bool> ConfigSetReserveCommand { get; set; }
-    internal ConfigEntry<bool> ConfigAddReserveCommand { get; set; }
-    internal ConfigEntry<bool> ConfigRemoveReserveCommand { get; set; }
+    internal ConfigEntry<bool> ConfigSetReserveCommand { get; private set; }
+    internal ConfigEntry<bool> ConfigAddReserveCommand { get; private set; }
+    internal ConfigEntry<bool> ConfigRemoveReserveCommand { get; private set; }
 
     private static readonly IEnumerable<Type> m_allCathretCommandsTypes = System.Reflection.Assembly.GetExecutingAssembly().GetTypes()
         .Where(_p => typeof(ITwitchCommand).IsAssignableFrom(_p) && _p != typeof(ITwitchCommand));
@@ -82,7 +82,7 @@ public class TwitchCathretCommands : AAutoReloadConfig
     {
         ConfigActivateCommands = TwitchCathretCommandsPlugin.Instance.Config.Bind("_Plugin", "Activate Mod", true, new ConfigDescription("Should the mod be activated and read commands from Twitch Chat"));
         
-        ConfigKillCommand = TwitchCathretCommandsPlugin.Instance.Config.Bind("TwitchCathretCommands", "Activate Kill Command", true, new ConfigDescription("Usage: kill [pos X|humans|ais]"));
+        ConfigKillCommand = TwitchCathretCommandsPlugin.Instance.Config.Bind("TwitchCathretCommands", "Activate Kill Command", true, new ConfigDescription("Usage: kill [karter name|pos X|humans|ais]"));
         ConfigAddHealthCommand = TwitchCathretCommandsPlugin.Instance.Config.Bind("TwitchCathretCommands", "Activate Add Health Command", true, new ConfigDescription("Usage: gain hp [X]"));
         ConfigRemoveHealthCommand = TwitchCathretCommandsPlugin.Instance.Config.Bind("TwitchCathretCommands", "Activate Remove Health Command", true, new ConfigDescription("Usage: lose hp [X]"));
 
