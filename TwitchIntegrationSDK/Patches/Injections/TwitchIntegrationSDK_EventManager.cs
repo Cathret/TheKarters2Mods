@@ -9,14 +9,17 @@ public class TwitchIntegrationSDK_EventManager : MonoBehaviour
     
     public bool ReceiveMessage(string _user, string _message)
     {
-        TwitchIntegrationSDKPlugin.Log.LogWarning($"{_message}");
+        TwitchIntegrationSDKPlugin.Log.LogDebug($"USER: [{_user}] MESSAGE: [{_message}]");
         return HandleMessage(_user, _message);
     }
 
     private bool HandleMessage(string _user, string _message)
     {
-        if (_message.Equals("PING"))
-            TwitchIntegrationSDK.TwitchChatManager.WriteToChat($"PONG {_user}");
+        if (TwitchIntegrationSDK.DebugEnabled)
+        {
+            if (_message.Equals("PING"))
+                TwitchIntegrationSDK.TwitchChatManager.WriteToChat($"PONG {_user}");
+        }
 
         onTwitchChatMessage?.Invoke(_user, _message);
         

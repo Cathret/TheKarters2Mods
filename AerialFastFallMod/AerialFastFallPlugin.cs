@@ -7,8 +7,8 @@ using TheKarters2Mods.Patches;
 namespace TheKarters2Mods;
 
 [BepInPlugin(AerialFastFall_BepInExInfo.PLUGIN_GUID, AerialFastFall_BepInExInfo.PLUGIN_NAME, AerialFastFall_BepInExInfo.PLUGIN_VERSION)]
-[BepInDependency(PluginDependencies.DISABLE_LEADERBOARDS_GUID)]
-[BepInDependency(PluginDependencies.AUTO_RELOAD_CONFIG_GUID)]
+[BepInDependency(DisableLeaderboards_BepInExInfo.PLUGIN_GUID)]
+[BepInDependency(AutoReloadConfigModSDK_BepInExInfo.PLUGIN_GUID)]
 public class AerialFastFallPlugin : BasePlugin
 {
     public static AerialFastFallPlugin Instance { get; private set; }

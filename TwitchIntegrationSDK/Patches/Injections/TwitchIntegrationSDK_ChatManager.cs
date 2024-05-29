@@ -3,7 +3,6 @@ using System.IO;
 using System.Net.Sockets;
 using BepInEx;
 using UnityEngine;
-using Object = UnityEngine.Object;
 
 namespace TheKarters2Mods.Patches.Injections;
 
@@ -33,7 +32,7 @@ public class TwitchIntegrationSDK_ChatManager : MonoBehaviour
         }
     }
 
-    public void Update()
+    public void FixedUpdate()
     {
         ReadChat();
     }
@@ -84,7 +83,7 @@ public class TwitchIntegrationSDK_ChatManager : MonoBehaviour
         string user = readMessage.Substring(0, readMessage.IndexOf("!", 1, StringComparison.Ordinal)).Substring(1);
         string message = readMessage.Substring(readMessage.IndexOf(":", 1, StringComparison.Ordinal) + 1);
         
-        TwitchIntegrationSDKPlugin.Log.LogInfo($"({user}: {message})");
+        TwitchIntegrationSDKPlugin.Log.LogDebug($"({user}: {message})");
         
         eventManager.ReceiveMessage(user, message);
 

@@ -1,6 +1,5 @@
 ﻿using BepInEx.Configuration;
 using BepInEx.Unity.IL2CPP;
-using Il2CppInterop.Runtime.Injection;
 
 namespace TheKarters2Mods.Patches;
 
@@ -40,6 +39,7 @@ public class TwitchIntegrationSDK_Patcher : AAutoReloadConfig
     {
         ConfigEnableTwitchIntegration = m_plugin.Config.Bind("_Plugin", "EnableTwitchIntegration", true, new ConfigDescription("Should enable Twitch Integration mod. If enabled, will disable leaderboards."));
 
+        m_configTwitchIntegrationSDK.ConfigEnableDebug = m_plugin.Config.Bind("TwitchIntegration", "Enable Debug", false, new ConfigDescription("Activate Debug, allowing to check if SDK is running using PING command."));
         m_configTwitchIntegrationSDK.ConfigUserName = m_plugin.Config.Bind("TwitchIntegration", "Username", "__REPLACE_ME__", new ConfigDescription("Username of the Bot in Twitch Chat."));
         m_configTwitchIntegrationSDK.ConfigOAuthToken = m_plugin.Config.Bind("TwitchIntegration", "OAuth Token", "__REPLACE_ME__", new ConfigDescription("/!!\\ DO NOT SHARE THIS INFORMATION /!!\\\nOAuth Token of the Authorization given on your Twitch Account."));
         m_configTwitchIntegrationSDK.ConfigChannelName = m_plugin.Config.Bind("TwitchIntegration", "Channel Name", "__REPLACE_ME__", new ConfigDescription("Channel name of the Twitch Channel to connect to."));
