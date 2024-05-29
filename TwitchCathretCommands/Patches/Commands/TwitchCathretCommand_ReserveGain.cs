@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System;
 using TheKartersModdingAssistant;
 
 namespace TheKarters2Mods.Patches.Commands;
@@ -26,7 +25,7 @@ public class TwitchCathretCommand_ReserveGain : ITwitchCommand
         int reserveAdded = BASE_RESERVE_ADDED;
         if (_command.Length == 4)
         {
-            reserveAdded = int.Parse(_command[3]);
+            reserveAdded = Math.Min(int.Parse(_command[3]), TwitchCathretCommands.Instance.ConfigReserveClampValue.Value);
         }
 
         Player mainPlayer = Player.FindMainPlayer();

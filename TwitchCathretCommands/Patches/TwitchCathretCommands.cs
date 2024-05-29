@@ -18,10 +18,12 @@ public class TwitchCathretCommands : AAutoReloadConfig
     internal ConfigEntry<bool> ConfigKillCommand { get; private set; }
     internal ConfigEntry<bool> ConfigRemoveHealthCommand { get; private set; }
     internal ConfigEntry<bool> ConfigAddHealthCommand { get; private set; }
+    internal ConfigEntry<int> ConfigHealthClampValue { get; private set; }
     
     internal ConfigEntry<bool> ConfigSetReserveCommand { get; private set; }
     internal ConfigEntry<bool> ConfigAddReserveCommand { get; private set; }
     internal ConfigEntry<bool> ConfigRemoveReserveCommand { get; private set; }
+    internal ConfigEntry<int> ConfigReserveClampValue { get; private set; }
 
     private static readonly IEnumerable<Type> m_allCathretCommandsTypes = System.Reflection.Assembly.GetExecutingAssembly().GetTypes()
         .Where(_p => typeof(ITwitchCommand).IsAssignableFrom(_p) && _p != typeof(ITwitchCommand));
@@ -85,10 +87,12 @@ public class TwitchCathretCommands : AAutoReloadConfig
         ConfigKillCommand = TwitchCathretCommandsPlugin.Instance.Config.Bind("TwitchCathretCommands", "Activate Kill Command", true, new ConfigDescription("Usage: kill [karter name|pos X|humans|ais]"));
         ConfigAddHealthCommand = TwitchCathretCommandsPlugin.Instance.Config.Bind("TwitchCathretCommands", "Activate Add Health Command", true, new ConfigDescription("Usage: gain hp [X]"));
         ConfigRemoveHealthCommand = TwitchCathretCommandsPlugin.Instance.Config.Bind("TwitchCathretCommands", "Activate Remove Health Command", true, new ConfigDescription("Usage: lose hp [X]"));
+        ConfigHealthClampValue = TwitchCathretCommandsPlugin.Instance.Config.Bind("TwitchCathretCommands_Health", "Health Clamp Value", 999, new ConfigDescription("Maximum value that can be used for Health modification commands."));
 
         ConfigSetReserveCommand = TwitchCathretCommandsPlugin.Instance.Config.Bind("TwitchCathretCommands", "Activate Set Reserve Command", true, new ConfigDescription("Usage: reserve set X"));
         ConfigAddReserveCommand = TwitchCathretCommandsPlugin.Instance.Config.Bind("TwitchCathretCommands", "Activate Add Reserve Command", true, new ConfigDescription("Usage: reserve gain [X]"));
         ConfigRemoveReserveCommand = TwitchCathretCommandsPlugin.Instance.Config.Bind("TwitchCathretCommands", "Activate Remove Reserve Command", true, new ConfigDescription("Usage: reserve lose [X]"));
+        ConfigReserveClampValue = TwitchCathretCommandsPlugin.Instance.Config.Bind("TwitchCathretCommands_Reserve", "Reserve Clamp Value", 999, new ConfigDescription("Maximum value that can be used for Reserve modification commands."));
 
         RefreshCommands();
     }

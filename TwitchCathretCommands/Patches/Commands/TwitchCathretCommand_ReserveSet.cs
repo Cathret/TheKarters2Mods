@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System;
 using TheKartersModdingAssistant;
 
 namespace TheKarters2Mods.Patches.Commands;
@@ -21,7 +20,7 @@ public class TwitchCathretCommand_ReserveSet : ITwitchCommand
 
     public bool ExecuteCommand(string _user, string[] _command)
     {
-        int reserve = int.Parse(_command[3]);
+        int reserve = Math.Min(int.Parse(_command[3]), TwitchCathretCommands.Instance.ConfigReserveClampValue.Value);
         
         Player.FindMainPlayer().SetCurrentReserveInPercentage(reserve);
 

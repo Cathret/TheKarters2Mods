@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System;
 using TheKartersModdingAssistant;
 
 namespace TheKarters2Mods.Patches.Commands;
@@ -26,7 +25,7 @@ public class TwitchCathretCommand_HpGain : ITwitchCommand
         int hpAdded = BASE_HP_ADDED;
         if (_command.Length == 4)
         {
-            hpAdded = int.Parse(_command[3]);
+            hpAdded = Math.Min(int.Parse(_command[3]), TwitchCathretCommands.Instance.ConfigHealthClampValue.Value);
         }
 
         Player mainPlayer = Player.FindMainPlayer();
