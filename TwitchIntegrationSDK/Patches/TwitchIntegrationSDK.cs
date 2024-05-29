@@ -7,6 +7,7 @@ namespace TheKarters2Mods.Patches;
 
 public class TwitchIntegrationSDK_ConfigData
 {
+    public ConfigEntry<bool> ConfigEnableDebug { get; set; }
     public ConfigEntry<string> ConfigUserName { get; set; }
     public ConfigEntry<string> ConfigOAuthToken { get; set; }
     public ConfigEntry<string> ConfigChannelName { get; set; }
@@ -20,6 +21,7 @@ public class TwitchIntegrationSDK
     public static Injections.TwitchIntegrationSDK_ChatManager TwitchChatManager { get; private set; }
     public static Injections.TwitchIntegrationSDK_EventManager TwitchEventManager { get; private set; }
     
+    public static bool DebugEnabled { get; private set; }
     public static string TwitchUserName { get; private set; }
     public static string TwitchOAuthToken { get; private set; }
     public static string TwitchChannelName { get; private set; }
@@ -32,10 +34,12 @@ public class TwitchIntegrationSDK
 
     public static void LoadConfig(TwitchIntegrationSDK_ConfigData _configData)
     {
+        DebugEnabled = _configData.ConfigEnableDebug.Value;
         TwitchUserName = _configData.ConfigUserName.Value;
         TwitchOAuthToken = _configData.ConfigOAuthToken.Value;
         TwitchChannelName = _configData.ConfigChannelName.Value;
 
+        TwitchIntegrationSDKPlugin.Log.LogDebug($"Debug Enabled? [{DebugEnabled}]");
         TwitchIntegrationSDKPlugin.Log.LogInfo($"Loaded UserName value [{TwitchUserName}]");
         TwitchIntegrationSDKPlugin.Log.LogInfo($"Loaded OAuth Token value [__HIDDEN__]");
         TwitchIntegrationSDKPlugin.Log.LogDebug($"Loaded OAuth Token value [{TwitchOAuthToken}]");

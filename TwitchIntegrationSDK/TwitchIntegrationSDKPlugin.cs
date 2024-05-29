@@ -14,9 +14,7 @@ public class TwitchIntegrationSDKPlugin : BasePlugin
     private static TwitchIntegrationSDKPlugin Instance { get; set; }
 
     internal new static ManualLogSource Log;
-
-    private static ConfigEntry<bool> ConfigEnableMod { get; set; }
-
+    
     private Patches.TwitchIntegrationSDK_Patcher m_twitchIntegrationSDKPatcher = new Patches.TwitchIntegrationSDK_Patcher();
 
     public override void Load()

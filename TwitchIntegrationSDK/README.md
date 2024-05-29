@@ -60,6 +60,9 @@ private void OnTwitchChatMessage(string _user, string _message)
 ## Parameters
 
 ### Global
+#### Enable Debug
+If True, permits to test Twitch Integration is running by using `PING` in the Twitch Chat.
+
 #### Username
 ~~Username of the Bot in Twitch Chat.~~ Use **TestTKIntegration**.
 
