@@ -93,6 +93,9 @@ public class TwitchCathretCommands : AAutoReloadConfig
         ConfigAddReserveCommand = TwitchCathretCommandsPlugin.Instance.Config.Bind("TwitchCathretCommands", "Activate Add Reserve Command", true, new ConfigDescription("Usage: reserve gain [X]"));
         ConfigRemoveReserveCommand = TwitchCathretCommandsPlugin.Instance.Config.Bind("TwitchCathretCommands", "Activate Remove Reserve Command", true, new ConfigDescription("Usage: reserve lose [X]"));
         ConfigReserveClampValue = TwitchCathretCommandsPlugin.Instance.Config.Bind("TwitchCathretCommands_Reserve", "Reserve Clamp Value", 999, new ConfigDescription("Maximum value that can be used for Reserve modification commands."));
+        
+        TwitchCathretCommandsPlugin.Log.LogInfo($"Loaded Reserve Clamp value [{ConfigReserveClampValue.Value}]");
+        TwitchCathretCommandsPlugin.Log.LogInfo($"Loaded Health Clamp value [{ConfigHealthClampValue.Value}]");
 
         RefreshCommands();
     }

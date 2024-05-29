@@ -37,7 +37,8 @@ public class TwitchIntegrationSDK
         TwitchChannelName = _configData.ConfigChannelName.Value;
 
         TwitchIntegrationSDKPlugin.Log.LogInfo($"Loaded UserName value [{TwitchUserName}]");
-        TwitchIntegrationSDKPlugin.Log.LogInfo($"Loaded OAuth Token value [{TwitchOAuthToken}]");
+        TwitchIntegrationSDKPlugin.Log.LogInfo($"Loaded OAuth Token value [__HIDDEN__]");
+        TwitchIntegrationSDKPlugin.Log.LogDebug($"Loaded OAuth Token value [{TwitchOAuthToken}]");
         TwitchIntegrationSDKPlugin.Log.LogInfo($"Loaded Channel Name value [{TwitchChannelName}]");
     }
     
@@ -60,7 +61,7 @@ public class TwitchIntegrationSDK
 
     private static void CreateTwitchIntegrationObject()
     {
-        TwitchIntegrationSDKPlugin.Log.LogInfo($"CREATING Twitch Integration GameObject");
+        TwitchIntegrationSDKPlugin.Log.LogDebug($"CREATING Twitch Integration GameObject");
 
         TwitchObject = new GameObject("TwitchIntegrationSDK_GO");
         UnityEngine.Object.DontDestroyOnLoad(TwitchObject);
@@ -71,7 +72,7 @@ public class TwitchIntegrationSDK
     
     private static bool DeleteInstanceGameObject()
     {
-        TwitchIntegrationSDKPlugin.Log.LogInfo($"DELETING Twitch Integration GameObject");
+        TwitchIntegrationSDKPlugin.Log.LogDebug($"DELETING Twitch Integration GameObject");
 
         if (TwitchObject == null)
             return false;

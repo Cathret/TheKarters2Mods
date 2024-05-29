@@ -104,7 +104,7 @@ public class AutoReloadConfigModSDKPlugin : BasePlugin
         if (timeSinceLastReload.Seconds < ConfigMinTimeBeforeReload.Value)
             return;
         
-        Log.LogMessage($"Config File modified [{_e.Name}]");
+        Log.LogDebug($"Config File modified [{_e.Name}]");
 
         string filePath = _e.FullPath;
         if (m_autoReloadPathInstance.TryGetValue(filePath, out var outAutoReloadConfig))

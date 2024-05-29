@@ -62,8 +62,6 @@ public class FastFallWhileJoystickInput
         if (!IsAllowedToFastFall(__instance))
             return;
         
-        AerialFastFallPlugin.Log.LogDebug("Fast Falling ready to activate");
-
         float verticalRate = GetFastFallInputValue();
         if (verticalRate > ms_minimumJoystickInputBeforeFastFall)
         {

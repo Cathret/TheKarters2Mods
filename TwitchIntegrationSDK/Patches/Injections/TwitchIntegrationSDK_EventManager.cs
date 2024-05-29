@@ -9,7 +9,7 @@ public class TwitchIntegrationSDK_EventManager : MonoBehaviour
     
     public bool ReceiveMessage(string _user, string _message)
     {
-        TwitchIntegrationSDKPlugin.Log.LogWarning($"{_message}");
+        TwitchIntegrationSDKPlugin.Log.LogDebug($"USER: [{_user}] MESSAGE: [{_message}]");
         return HandleMessage(_user, _message);
     }
 
